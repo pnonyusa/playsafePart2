@@ -3,7 +3,7 @@ package playSafeGame;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,21 +15,19 @@ public class GameBoard {
 		
 		try {
 			  int numberPlayed=0;
-			  int count=0,result,spin=0;
+			  int count=0,result=0,spin=0;
 			  double amountPlayedWith=0.0;
-			  double amountWin=0;
-			  int total=36;
-			  
-              int luckyNumber=0;
-              
+              int luckyNumber;
 			  String name;
 			  
 			  Random random=new Random();
 			  
 			  
-			  List<String>players=new ArrayList<String>();
+			  
+  			  List<String>players=new ArrayList<String>();
 		      File myObj = new File("playersnames.txt");
 		      String data="";
+		      
 		      Scanner inputs=new Scanner(System.in);
 		      
 		      
@@ -41,36 +39,32 @@ public class GameBoard {
 		        System.out.println(data);
 		      }
 		      myReader.close();
+		      
+		      
 		       System.out.print("\n");
 			      
 		       
 		       name =inputs.nextLine();
-		       
-		       
 		       String[] myString=name.split(" ");
-		       
-		       if(myString[1].matches("-?\\d+(\\.\\d+)?")) {
-	    		   numberPlayed=Integer.parseInt(myString[1]);
-	    		   System.out.println("Numeric Value");
-	    	   }
-		       
-		       amountPlayedWith=Double.parseDouble(myString[2]);
 		       while(myString[0].equals(players.get(count)) || myString[0].equals(players.get(count+1))) {
 		    	   
-		    	  
-		    	   luckyNumber=randomNumber(random);
-		    	   
-		    	   
-		    	   System.out.println("number :"+luckyNumber);
+			       luckyNumber=randomNumber(random);
+
+			       if(myString[1].matches("-?\\d+(\\.\\d+)?")) {
+		    		   numberPlayed=Integer.parseInt(myString[1]);
+		    		   //System.out.println("Numeric Value");
+		    	   }
+			       
+			       amountPlayedWith=Double.parseDouble(myString[2]);
 		    	   
 		    	   if(numberPlayed>0 && numberPlayed<36) {
 		    		  if(luckyNumber==numberPlayed) 
 		    			  
-		    			//  System.out.println("Numeric Value");
+		    		
 		    			  result=36;
 		    		  else 
-		    			 // result=0;
-		    		  System.out.println("lost");
+		    			 result=0;
+		    		  
 		    		   
 		    	   }
 
@@ -89,25 +83,32 @@ public class GameBoard {
 		    	   if(myString[1].equals("ODD")) {
 		    		   
 		    		   if(luckyNumber %2 !=0)
-		    			    // result=2;
-		    		     System.out.println("Odd number win");
+		    			    result=2;
 		    		   else 
-		    			    //result=0;
+		    			    result=0;
 		    			   
-		    			   System.out.println("Odd number lost");
+		    			   
 		    	   }
 		    	   
-		    	   if(myString[1].matches("-?\\d+(\\.\\d+)?")) {
-		    		   numberPlayed=Integer.parseInt(myString[1]);
-		    		   System.out.println("Numeric Value");
-		    	   }
 		    	   
+		    	   
+		    	   System.out.println("number :"+luckyNumber+"\n");
+		    	   
+		    	   System.out.println("Player\t"+" "+"Bet\t"+" "+"Outcome\t"+" "+"Winnings");
+		    	   if(result > 0) {
+		    		   System.out.println(myString[0]+"\t"+" "+myString[1]+"\t"+"Win"+"\t"+" "+(result*amountPlayedWith));
+		    	   }else {
+		    		   System.out.println(myString[0]+"\t"+" "+myString[1]+"\t"+"Lost"+"\t"+" "+result*amountPlayedWith);
+		    	   }
+		    	  //t luckyNumber=randomNumber(random);
 		    	   name =inputs.nextLine();
 		    	   myString=name.split(" ");
-		    	 
+		    	  if(myString[1].matches("-?\\d+(\\.\\d+)?")) {
+		    		   numberPlayed=Integer.parseInt(myString[1]);
+		    	   }
 		    	   amountPlayedWith=Double.parseDouble(myString[2]);
-		    	   spin++;
 		    	   
+		    	     
 		    	   
 		       }
 	
